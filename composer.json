@@ -1,0 +1,25 @@
+{
+    "name": "the-dusky/idempiere-php-composite-api",
+    "description": "Biblioteca em PHP para facilitar as requisições SOAP no BrERP ",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Pedro Pozzi Ferreira",
+            "email": "pedro.ferreira@devcoffee.com.br"
+        },
+        {
+            "name": "Jonatas Silvestrini",
+            "email": "jonatas.silvestrini@devcoffee.com.br"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0",
+        "the-dusky/idempiere-php-composite-api": "dev-master"
+    },
+    "autoload" : {
+        "psr-4": {
+            "IdempierePhpCompositeApi\\": "src/"
+        }
+    }
+}
