@@ -47,14 +47,15 @@ class BrerpWsc {
         return $this->xml_request;
     }
 
+    public function set_xml_request($request){
+        $this->xml_request = $request;      
+    }
     public function get_xml_response() {
         return $this->xml_response;
     }
 
     public function make_request() {
         //echo $request_url .="\n";
-        
-        $this->build_request_footer();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,               $this->array_request['settings']['url'] . "/ADInterface/services/compositeInterface");
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,    10);
@@ -64,13 +65,11 @@ class BrerpWsc {
         curl_setopt($ch, CURLOPT_FRESH_CONNECT,     TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS,        $this->xml_request);
         $this->xml_response = curl_exec($ch);
-        echo curl_exec($ch);
-        echo $this->xml_response;
         curl_close($ch);
         $this->parse_response();
     }
 
-    public function parse_response() {
+    private function parse_response() {
         $xml = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $this->xml_response);
         $ob = simplexml_load_string($xml);
         $this->raw_json_response = json_encode($ob);
@@ -79,7 +78,7 @@ class BrerpWsc {
         $this->json_response = json_encode($this->array_response);
     }
 
-    public function reformat_array_response() {
+    private function reformat_array_response() {
         $new_array = array();
         $summary_array = array();
         $formatted_array = $this->raw_array_response['soapBody']['ns1compositeOperationResponse']['CompositeResponses']['CompositeResponse'];
@@ -143,7 +142,7 @@ class BrerpWsc {
         }
     }
 
-    public function get_response_summary($formatted_array) {
+    private function get_response_summary($formatted_array) {
         $summary_array = array();
         foreach($formatted_array['StandardResponse'] as $key => $value) {
             if(isset($this->array_request['call'][$key]['name']) && isset($value['@attributes']['RecordID'])) {
@@ -162,14 +161,14 @@ class BrerpWsc {
         return $summary_array;
     }
 
-    public function parse_serviceName($new_array, $key) {
+    private function parse_serviceName($new_array, $key) {
         if(isset($this->array_request['call'][$key]['serviceName'])) {
             $new_array[$key]['serviceName'] = $this->array_request['call'][$key]['serviceName'];
         }
         return $new_array;
     }
 
-    public function parse_RecordID($new_array, $key, $value) {
+    private function parse_RecordID($new_array, $key, $value) {
         if(isset($value['@attributes']['RecordID'])) {
             $new_array[$key]['RecordID'] = $value['@attributes']['RecordID'];
         }
@@ -193,9 +192,10 @@ class BrerpWsc {
             $this->build_request_head();
         }
         $this->build_request_body();
+        $this->build_request_footer();
     }
 
-    public function build_request_head() {
+    private function build_request_head() {
         $this->xml_request = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_0="http://idempiere.org/ADInterface/1_0"><soapenv:Header/>';
         $this->xml_request .= '<soapenv:Body>';
         $this->xml_request .= '<_0:compositeOperation>';
@@ -210,16 +210,16 @@ class BrerpWsc {
         $this->xml_request .= '<_0:WarehouseID>' .  $this->array_request['settings']['warehouseId'] . '</_0:WarehouseID>';
         $this->xml_request .= '<_0:stage>' .  $this->array_request['settings']['stage'] . '</_0:stage>';
         $this->xml_request .= '</_0:ADLoginRequest>';
-        $this->xml_request .= '<_0:serviceType>wp-compositeWrapper</_0:serviceType>';
+        $this->xml_request .= '<_0:serviceType>'. $this->array_request['settings']['compositeWebServiceName'] .'</_0:serviceType>';
         $this->xml_request .= '<_0:operations>';
     }
 
-    public function build_request_body() {
-        foreach($this->array_request['call'] as $request) {
-            if($request['type'] == 'setDocAction') {
-                $this->xml_request .= '<_0:operation preCommit="' . $request['preCommit'] . '" postCommit="' . $request['postCommit'] . '">';
-                $this->xml_request .= '<_0:TargetPort>setDocAction</_0:TargetPort>';
-                $this->xml_request .= '<_0:ModelSetDocAction>';
+    private function build_request_body() {
+            foreach($this->array_request['call'] as $request) {
+                if($request['type'] == 'setDocAction') {
+                    $this->xml_request .= '<_0:operation preCommit="' . $request['preCommit'] . '" postCommit="' . $request['postCommit'] . '">';
+                    $this->xml_request .= '<_0:TargetPort>setDocAction</_0:TargetPort>';
+                    $this->xml_request .= '<_0:ModelSetDocAction>';
                 $this->xml_request .= '<_0:serviceType>' . $request['serviceName'] . '</_0:serviceType>';
                 $this->xml_request .= '<_0:tableName>' . $request['table'] . '</_0:tableName>';
                 $this->xml_request .= '<_0:recordID>' . '0' . '</_0:recordID>';
@@ -274,7 +274,7 @@ class BrerpWsc {
         }
     }
 
-    public function build_request_footer() {
+    private function build_request_footer() {
         $this->xml_request .= '</_0:operations>';
         $this->xml_request .= '</_0:CompositeRequest>';
         $this->xml_request .= '</_0:compositeOperation>';

@@ -1,0 +1,22 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+    xmlns:_0="http://idempiere.org/ADInterface/1_0">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <_0:compositeOperation>
+            <_0:CompositeRequest>
+                <_0:ADLoginRequest>
+                    <_0:user>superuser @ brerp.com.br</_0:user>
+                    <_0:pass>cafe123</_0:pass>
+                    <_0:lang>pt_BR</_0:lang>
+                    <_0:ClientID>1000000</_0:ClientID>
+                    <_0:RoleID>1000000</_0:RoleID>
+                    <_0:OrgID>5000003</_0:OrgID>
+                    <_0:WarehouseID>5000007</_0:WarehouseID>
+                    <_0:stage>9</_0:stage>
+                </_0:ADLoginRequest>
+                <_0:serviceType>CompositeWebServiceTest</_0:serviceType>
+                <_0:operations></_0:operations>
+            </_0:CompositeRequest>
+        </_0:compositeOperation>
+    </soapenv:Body>
+</soapenv:Envelope>
