@@ -6,7 +6,7 @@
             <_0:CompositeRequest>
                 <_0:ADLoginRequest>
                     <_0:user>superuser @ brerp.com.br</_0:user>
-                    <_0:pass>cafe123</_0:pass>
+                    <_0:pass>sua senha aqui</_0:pass>
                     <_0:lang>pt_BR</_0:lang>
                     <_0:ClientID>1000000</_0:ClientID>
                     <_0:RoleID>1000000</_0:RoleID>
