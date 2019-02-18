@@ -1,6 +1,6 @@
-<?
+<?php
 
-namespace BrerpPhpCompositeWsc;
+//namespace BrerpPhpCompositeWsc;
 
 class BrerpWsc {
 
@@ -52,9 +52,11 @@ class BrerpWsc {
     }
 
     public function make_request() {
+        //echo $request_url .="\n";
+        
         $this->build_request_footer();
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,               $this->array_request['settings']['urlEndpoint']);
+        curl_setopt($ch, CURLOPT_URL,               $this->array_request['settings']['url'] . "/ADInterface/services/compositeInterface");
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,    10);
         curl_setopt($ch, CURLOPT_TIMEOUT,           10);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,    true );
@@ -62,7 +64,10 @@ class BrerpWsc {
         curl_setopt($ch, CURLOPT_FRESH_CONNECT,     TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS,        $this->xml_request);
         $this->xml_response = curl_exec($ch);
+        echo curl_exec($ch);
+        echo $this->xml_response;
         curl_close($ch);
+        $this->parse_response();
     }
 
     public function parse_response() {
@@ -205,7 +210,7 @@ class BrerpWsc {
         $this->xml_request .= '<_0:WarehouseID>' .  $this->array_request['settings']['warehouseId'] . '</_0:WarehouseID>';
         $this->xml_request .= '<_0:stage>' .  $this->array_request['settings']['stage'] . '</_0:stage>';
         $this->xml_request .= '</_0:ADLoginRequest>';
-        $this->xml_request .= '<_0:serviceType>SyncOrder</_0:serviceType>';
+        $this->xml_request .= '<_0:serviceType>wp-compositeWrapper</_0:serviceType>';
         $this->xml_request .= '<_0:operations>';
     }
 
