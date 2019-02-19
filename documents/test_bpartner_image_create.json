@@ -16,20 +16,6 @@
             "type":"createData",
             "preCommit":"false",
             "postCommit":"false",
-            "serviceName":"CreateBPartnerTest",
-            "table":"c_bpartner",
-            "action":"Create",
-            "name":"bpartner_id",
-            "values":{
-                "Name":"Parceiro de Negócios",
-                "Value":"123456",
-                "Logo_ID":"@AD_Image.AD_Image_ID"
-            }
-        },
-        {
-            "type":"createData",
-            "preCommit":"false",
-            "postCommit":"false",
             "serviceName":"CreateImageTest",
             "table":"c_bpartner",
             "action":"Create",
@@ -38,6 +24,20 @@
                 "Name":"devCoffee-logo.png",
                 "Description":"Test create a BPartner with a Logo",
                 "BinaryData":"123456"
+            }
+        },
+        {
+            "type":"createData",
+            "preCommit":"false",
+            "postCommit":"false",
+            "serviceName":"CreateBPartnerTest",
+            "table":"c_bpartner",
+            "action":"Create",
+            "name":"bpartner_id",
+            "values":{
+                "Name":"Parceiro de Negócios",
+                "Value":"123456",
+                "Logo_ID":"@AD_Image.AD_Image_ID"
             }
         }
     ]

@@ -9,7 +9,7 @@ $request_content = file_get_contents("../documents/test_bpartner_image_create.js
 $json_request = json_decode($request_content, true);
 
 //Atribuindo valor aleatório para a chave de busca do parceiro
-$json_request["call"][0]["values"]["Value"] = random_int(1000000, 10000000);
+$json_request["call"][1]["values"]["Value"] = random_int(1000000, 10000000);
 
 
 //Convertendo logo para base64 e atribuindo no BinaryData
@@ -17,7 +17,7 @@ $binarydata = new BinaryData();
 $imgb64 = $binarydata->img2base64("../images/logoP.png");
 
 //Atribuindo o logo em base64 no BinaryData
-$json_request["call"][1]["values"]["BinaryData"] = $imgb64;
+$json_request["call"][0]["values"]["BinaryData"] = $imgb64;
 
 //Instanciando o web service connector
 $brerp_wsc = new BrerpWsc();
