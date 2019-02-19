@@ -1,8 +1,8 @@
 {
     "settings":{
-       "url":"http://dev11.devcoffee.com.br",
+       "url":"https://teste.brerp.com.br",
        "user":"superuser @ brerp.com.br",
-       "password":"pp_brerp",
+       "password":"sua_senha_aqui",
        "language":"pt_BR",
        "clientId":"1000000",
        "roleId":"1000000",
@@ -36,7 +36,7 @@
             "action":"Create",
             "name":"bpartner_id",
             "values":{
-                "Name":"Chicão refatorado no modo turbo com imagens",
+                "Name":"Parceiro de Negócios",
                 "Value":"123456",
                 "Logo_ID":"@AD_Image.AD_Image_ID"
             }
