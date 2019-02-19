@@ -236,24 +236,51 @@ class BrerpWsc {
         }
         else{
             $this->xml_request .= '<_0:' . $this->array_request['settings']['serviceType'] .'>';
-            $this->xml_request .= '<_0:ModelCRUDRequest>';
-            $this->xml_request .= '<_0:ModelCRUD>';
+            $this->xml_request .= '<_0:ModelCRUDRequest>';            
+            $this->build_login_request();
         }
     }
 
     private function build_single_service_request_body(){
-        $this->xml_request .= '<_0:serviceType>' . $this->array_request['call']['serviceName'] . '</_0:serviceType>';
-        // $this->xml_request .= '<_0:operation preCommit="' . $this->array_request['call']['preCommit'] . '" postCommit="' . $this->array_request['call']['postCommit'] . '">';
-        // $this->xml_request .= '<_0:tableName>' . $this->array_request['call']['table'] . '</_0:tableName>';
-        // $this->xml_request .= '<_0:recordID>' . '0' . '</_0:recordID>';
-        // $this->xml_request .= '<_0:recordIDVariable>@' . $this->array_request['call']['table'] . "." . $this->array_request['call']['idColumn'] . '</_0:recordIDVariable>';
-        $this->xml_request .=  '<_0:DataRow>';
-        foreach($this->array_request['call']['values'] as $key => $value) {
-            $this->xml_request .= '<_0:field column="' . $key . '">';
-            $this->xml_request .= '<_0:val>' . $value . '</_0:val>';
-            $this->xml_request .= '</_0:field>';
+        if($this->array_request['settings']['serviceType'] === "setDocAction"){
+            $this->xml_request .= '<_0:ModelSetDocAction>';
+            $this->xml_request .= '<_0:serviceType>' . $array_request['call']['serviceName'] . '</_0:serviceType>';
+            $this->xml_request .= '<_0:tableName>' . $array_request['call']['table'] . '</_0:tableName>';
+            $this->xml_request .= '<_0:recordID>' . '0' . '</_0:recordID>';
+            $this->xml_request .= '<_0:recordIDVariable>@' . $array_request['call']['table'] . "." . $array_request['call']['idColumn'] . '</_0:recordIDVariable>';
+            $this->xml_request .= '<_0:docAction>' . $array_request['call']['action'] . '</_0:docAction>';
+            $this->xml_request .= '</_0:ModelSetDocAction>';
+        } else if($this->array_request['settings']['serviceType'] === "runProcess"){
+            $this->xml_request .= '<_0:ModelRunProcess>';
+            $this->xml_request .= '<_0:serviceType>' . $request['serviceName'] . '</_0:serviceType>';
+            $this->xml_request .= '<_0:ParamValues>';
+            foreach($request['values'] as $key => $value) {
+                if($key == 'lookup') {
+                    foreach($value as $lookup_req) {
+                        $this->xml_request .= '<_0:field column="' . $lookup_req['id'] . '" lval="' . $lookup_req['value'] . '"/>';
+                    }
+                } else {
+                    $this->xml_request .= '<_0:field column="' . $key . '">';
+                    $this->xml_request .= '<_0:val>' . $value . '</_0:val>';
+                    $this->xml_request .= '</_0:field>';
+                }
+            }
+            $this->xml_request .= '</_0:ParamValues>';
+            $this->xml_request .= '</_0:ModelRunProcess>';
+        } else {
+            $this->xml_request .= '<_0:ModelCRUD>';
+            $this->xml_request .= '<_0:serviceType>' . $this->array_request['call']['serviceName'] . '</_0:serviceType>';
+            $this->xml_request .=  '<_0:DataRow>';
+            foreach($this->array_request['call']['values'] as $key => $value) {
+                $this->xml_request .= '<_0:field column="' . $key . '">';
+                $this->xml_request .= '<_0:val>' . $value . '</_0:val>';
+                $this->xml_request .= '</_0:field>';
+            }
+            $this->xml_request .= ' </_0:DataRow>';
+            $this->xml_request .= '</_0:ModelCRUD>';
+            $this->xml_request .= '</_0:ModelCRUDRequest>';
+            $this->xml_request .= '</_0:' . $this->array_request['settings']['serviceType'] . '>';
         }
-        $this->xml_request .= ' </_0:DataRow>';
     }
 
     private function build_composite_service_request_body(){
@@ -328,12 +355,7 @@ class BrerpWsc {
             $this->xml_request .= '</_0:operations>';
             $this->xml_request .= '</_0:CompositeRequest>';
             $this->xml_request .= '</_0:compositeOperation>';
-        } else {
-            $this->xml_request .= '</_0:ModelCRUD>';
-            $this->build_login_request();            
-            $this->xml_request .= '</_0:ModelCRUDRequest>';
-            $this->xml_request .= '</_0:' . $this->array_request['settings']['serviceType'] . '>';
-        }
+        } 
         $this->xml_request .= '</soapenv:Body>';
         $this->xml_request .= '</soapenv:Envelope>';
     }
