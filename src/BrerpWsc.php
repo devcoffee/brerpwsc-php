@@ -71,7 +71,7 @@ class BrerpWsc {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,    true );
         curl_setopt($ch, CURLOPT_POST,              true );
         curl_setopt($ch, CURLOPT_FRESH_CONNECT,     TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,        $this->xml_request);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,        utf8_encode($this->xml_request));
         $this->xml_response = curl_exec($ch);
         curl_close($ch);
         $this->parse_response();
@@ -89,7 +89,12 @@ class BrerpWsc {
     private function reformat_array_response() {
         $new_array = array();
         $summary_array = array();
-        $formatted_array = $this->raw_array_response['soapBody']['ns1compositeOperationResponse']['CompositeResponses']['CompositeResponse'];
+        $response_type = "ns1" . $this->array_request['settings']['serviceType'] . "Response";
+        if($this->array_request['settings']['serviceType'] === "CompositeOperation"){
+            $formatted_array = $this->raw_array_response['soapBody']['ns1compositeOperationResponse']['CompositeResponses']['CompositeResponse'];
+        } else {
+            $formatted_array = $this->raw_array_response['soapBody'][$response_type];
+        }
         foreach($formatted_array['StandardResponse'] as $key => $value) {
             if(isset($value['IsError'])) {
                 $new_array['IsError'] = $value['IsError'];
