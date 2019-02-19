@@ -186,6 +186,7 @@ class BrerpWsc {
             $this->array_request = json_decode($request, true);
         } else {
             $this->array_request = $request;
+            $this->json_request = json_encode($this->array_request, JSON_PRETTY_PRINT);
         }
 
         if($append == false) {
