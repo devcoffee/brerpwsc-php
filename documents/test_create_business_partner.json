@@ -1,19 +1,18 @@
 {
     "settings":{
-       "url":"https://teste.brerp.com.br",
-       "user":"superuser @ brerp.com.br",
-       "password":"sua senha aqui",
-       "language":"pt_BR",
-       "clientId":"1000000",
-       "roleId":"1000000",
-       "orgId":"5000003",
-       "warehouseId":"5000007",
-       "stage":"9",
-       "compositeWebServiceName": "CompositeWebServiceTest"
+        "url":"http://dev11.devcoffee.com.br",
+        "user":"superuser @ brerp.com.br",
+        "password":"pp_brerp",
+        "language":"pt_BR",
+        "clientId":"1000000",
+        "roleId":"1000000",
+        "orgId":"5000003",
+        "warehouseId":"5000007",
+        "stage":"9",
+        "serviceType": "createData"
     },
-    "call":[
+    "call":
         {
-            "type":"createData",
             "preCommit":"false",
             "postCommit":"false",
             "serviceName":"CreateBPartnerTest",
@@ -21,9 +20,8 @@
             "action":"Create",
             "name":"bpartner_id",
             "values":{
-                "Name":"Chicão da Pedaleira",
+                "Name":"Chicão Refatorado",
                 "Value":"123456"
             }
         }
-    ]
  }

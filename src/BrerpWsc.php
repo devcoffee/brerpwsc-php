@@ -55,9 +55,18 @@ class BrerpWsc {
     }
 
     public function make_request() {
-        //echo $request_url .="\n";
+        $request_url = $this->array_request['settings']['url'] . "/ADInterface/services/";
+        if($this->array_request['settings']['serviceType'] === "CompositeOperation"){
+            $request_url . "compositeInterface";
+        } else{
+            $type = $this->array_request['settings']['serviceType'];
+            echo $type . "\n\n";
+            $request_url . $type;
+            echo "MANO?!?!?!?!?!?!?!? \n\n\n\n\n\n";    
+        }
+        echo "\n\n" . $request_url;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,               $this->array_request['settings']['url'] . "/ADInterface/services/compositeInterface");
+        curl_setopt($ch, CURLOPT_URL,               $request_url);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,    10);
         curl_setopt($ch, CURLOPT_TIMEOUT,           10);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,    true );
@@ -196,11 +205,7 @@ class BrerpWsc {
         $this->build_request_footer();
     }
 
-    private function build_request_head() {
-        $this->xml_request = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_0="http://idempiere.org/ADInterface/1_0"><soapenv:Header/>';
-        $this->xml_request .= '<soapenv:Body>';
-        $this->xml_request .= '<_0:compositeOperation>';
-        $this->xml_request .= '<_0:CompositeRequest>';
+    private function build_login_request(){
         $this->xml_request .= '<_0:ADLoginRequest>';
         $this->xml_request .= '<_0:user>' .  $this->array_request['settings']['user'] . '</_0:user>';
         $this->xml_request .= '<_0:pass>' .  $this->array_request['settings']['password'] . '</_0:pass>';
@@ -211,11 +216,43 @@ class BrerpWsc {
         $this->xml_request .= '<_0:WarehouseID>' .  $this->array_request['settings']['warehouseId'] . '</_0:WarehouseID>';
         $this->xml_request .= '<_0:stage>' .  $this->array_request['settings']['stage'] . '</_0:stage>';
         $this->xml_request .= '</_0:ADLoginRequest>';
-        $this->xml_request .= '<_0:serviceType>'. $this->array_request['settings']['compositeWebServiceName'] .'</_0:serviceType>';
-        $this->xml_request .= '<_0:operations>';
+    }
+    
+    private function build_request_head() {
+        $this->xml_request = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:_0="http://idempiere.org/ADInterface/1_0"><soapenv:Header/>';
+        $this->xml_request .= '<soapenv:Body>';
+        
+        if($this->array_request['settings']['serviceType'] === "CompositeOperation"){
+            $this->xml_request .= '<_0:compositeOperation>';
+            $this->xml_request .= '<_0:CompositeRequest>';    
+            $this->build_login_request();
+            $this->xml_request .= '<_0:serviceType>'. $this->array_request['settings']['compositeWebServiceName'] .'</_0:serviceType>';
+            $this->xml_request .= '<_0:operations>';
+        }
+        else{
+            $this->xml_request .= '<_0:' . $this->array_request['settings']['serviceType'] .'>';
+            $this->xml_request .= '<_0:ModelCRUDRequest>';
+            $this->build_login_request();
+            $this->xml_request .= '<_0:ModelCRUD>';
+        }
     }
 
-    private function build_request_body() {
+    private function build_single_service_request_body(){
+        $this->xml_request .= '<_0:serviceType>' . $this->array_request['call']['serviceName'] . '</_0:serviceType>';
+        $this->xml_request .= '<_0:operation preCommit="' . $this->array_request['call']['preCommit'] . '" postCommit="' . $this->array_request['call']['postCommit'] . '">';
+        $this->xml_request .= '<_0:tableName>' . $this->array_request['call']['table'] . '</_0:tableName>';
+        $this->xml_request .= '<_0:recordID>' . '0' . '</_0:recordID>';
+        $this->xml_request .= '<_0:recordIDVariable>@' . $this->array_request['call']['table'] . "." . $this->array_request['call']['idColumn'] . '</_0:recordIDVariable>';
+        $this->xml_request .=  '<_0:DataRow>';
+        foreach($this->array_request['call']['values'] as $key => $value) {
+            $this->xml_request .= '<_0:field column="' . $key . '">';
+            $this->xml_request .= '<_0:val>' . $value . '</_0:val>';
+            $this->xml_request .= '</_0:field>';
+        }
+        $this->xml_request .= ' </_0:DataRow>';
+    }
+
+    private function build_composite_service_request_body(){
             foreach($this->array_request['call'] as $request) {
                 if($request['type'] == 'setDocAction') {
                     $this->xml_request .= '<_0:operation preCommit="' . $request['preCommit'] . '" postCommit="' . $request['postCommit'] . '">';
@@ -272,13 +309,25 @@ class BrerpWsc {
                 $this->xml_request .= '</_0:ModelCRUD>';
                 $this->xml_request .= '</_0:operation>';
             }
-        }
+        }        
+    }
+    
+    private function build_request_body() {
+        if($this->array_request['settings']['serviceType'] === "CompositeOperation")
+            $this->build_composite_service_request_body();
+        else
+            $this->build_single_service_request_body();
     }
 
     private function build_request_footer() {
-        $this->xml_request .= '</_0:operations>';
-        $this->xml_request .= '</_0:CompositeRequest>';
-        $this->xml_request .= '</_0:compositeOperation>';
+        if($this->array_request['settings']['serviceType'] === "CompositeOperation"){
+            $this->xml_request .= '</_0:operations>';
+            $this->xml_request .= '</_0:CompositeRequest>';
+            $this->xml_request .= '</_0:compositeOperation>';
+        } else {
+            $this->xml_request .= '</_0:ModelCRUD>';
+            $this->xml_request .= '</_0:ModelCRUDRequest>';
+        }
         $this->xml_request .= '</soapenv:Body>';
         $this->xml_request .= '</soapenv:Envelope>';
     }
