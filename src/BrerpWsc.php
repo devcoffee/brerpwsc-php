@@ -56,15 +56,14 @@ class BrerpWsc {
 
     public function make_request() {
         $request_url = $this->array_request['settings']['url'] . "/ADInterface/services/";
-        if($this->array_request['settings']['serviceType'] === "CompositeOperation"){
-            $request_url . "compositeInterface";
-        } else{
-            $type = $this->array_request['settings']['serviceType'];
-            echo $type . "\n\n";
-            $request_url . $type;
-            echo "MANO?!?!?!?!?!?!?!? \n\n\n\n\n\n";    
-        }
-        echo "\n\n" . $request_url;
+        $request_url .= $this->array_request['settings']['url'] === "CompositeOperation" ? "compositeInterface" : "ModelADService";
+        
+        // if($this->array_request['settings']['serviceType'] === "CompositeOperation"){
+        //     $request_url .= "compositeInterface";
+        // } else{
+        //     $request_url .=  "ModelADService";
+        // }
+        echo "\n\n" . $request_url . "\n";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,               $request_url);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,    10);
@@ -232,17 +231,16 @@ class BrerpWsc {
         else{
             $this->xml_request .= '<_0:' . $this->array_request['settings']['serviceType'] .'>';
             $this->xml_request .= '<_0:ModelCRUDRequest>';
-            $this->build_login_request();
             $this->xml_request .= '<_0:ModelCRUD>';
         }
     }
 
     private function build_single_service_request_body(){
         $this->xml_request .= '<_0:serviceType>' . $this->array_request['call']['serviceName'] . '</_0:serviceType>';
-        $this->xml_request .= '<_0:operation preCommit="' . $this->array_request['call']['preCommit'] . '" postCommit="' . $this->array_request['call']['postCommit'] . '">';
-        $this->xml_request .= '<_0:tableName>' . $this->array_request['call']['table'] . '</_0:tableName>';
-        $this->xml_request .= '<_0:recordID>' . '0' . '</_0:recordID>';
-        $this->xml_request .= '<_0:recordIDVariable>@' . $this->array_request['call']['table'] . "." . $this->array_request['call']['idColumn'] . '</_0:recordIDVariable>';
+        // $this->xml_request .= '<_0:operation preCommit="' . $this->array_request['call']['preCommit'] . '" postCommit="' . $this->array_request['call']['postCommit'] . '">';
+        // $this->xml_request .= '<_0:tableName>' . $this->array_request['call']['table'] . '</_0:tableName>';
+        // $this->xml_request .= '<_0:recordID>' . '0' . '</_0:recordID>';
+        // $this->xml_request .= '<_0:recordIDVariable>@' . $this->array_request['call']['table'] . "." . $this->array_request['call']['idColumn'] . '</_0:recordIDVariable>';
         $this->xml_request .=  '<_0:DataRow>';
         foreach($this->array_request['call']['values'] as $key => $value) {
             $this->xml_request .= '<_0:field column="' . $key . '">';
@@ -326,7 +324,9 @@ class BrerpWsc {
             $this->xml_request .= '</_0:compositeOperation>';
         } else {
             $this->xml_request .= '</_0:ModelCRUD>';
+            $this->build_login_request();            
             $this->xml_request .= '</_0:ModelCRUDRequest>';
+            $this->xml_request .= '</_0:' . $this->array_request['settings']['serviceType'] . '>';
         }
         $this->xml_request .= '</soapenv:Body>';
         $this->xml_request .= '</soapenv:Envelope>';

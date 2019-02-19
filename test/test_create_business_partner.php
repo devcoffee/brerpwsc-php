@@ -34,7 +34,7 @@ $xml = '
                             <_0:val>Business Partner Test chicão</_0:val>
                         </_0:field>
                         <_0:field column="Value">
-                            <_0:val>1765532</_0:val>
+                            <_0:val>1765532chicão</_0:val>
                         </_0:field>
                         <_0:field column="TaxID">
                             <_0:val>987654321</_0:val>
@@ -55,12 +55,12 @@ $xml = '
     </soapenv:Body>
 </soapenv:Envelope>';
 
-$brerp_wsc->set_xml_request($xml);
+//$brerp_wsc->set_xml_request($xml);
 
-echo "\n\n\n\n\n" . $brerp_wsc->get_xml_request();
+//echo "\n\n\n\n\n" . $brerp_wsc->get_xml_request();
 
 //Executando requisição e exibindo resposta
 $brerp_wsc->make_request();
-//echo "\n\n" . $brerp_wsc->get_xml_response();
+echo "\n\n" . $brerp_wsc->get_xml_response();
 
 ?>
