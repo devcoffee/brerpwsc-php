@@ -20,8 +20,9 @@
             "action":"Create",
             "name":"bpartner_id",
             "values":{
-                "Name":"Chicão Refatorado",
+                "Name":"Parceiro de Negócios",
                 "Value":"123456"
             }
-        }
+        }            
+    ]
  }
