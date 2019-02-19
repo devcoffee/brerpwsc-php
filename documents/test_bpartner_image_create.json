@@ -1,6 +1,6 @@
 {
     "settings":{
-       "url":"https://dev11.brerp.com.br",
+       "url":"http://dev11.devcoffee.com.br",
        "user":"superuser @ brerp.com.br",
        "password":"pp_brerp",
        "language":"pt_BR",
@@ -9,7 +9,7 @@
        "orgId":"5000003",
        "warehouseId":"5000007",
        "stage":"9",
-       "ServiceType": "CompositeOperation",
+       "serviceType": "CompositeOperation",
        "compositeWebServiceName": "CompositeWebServiceTest"
     },
     "call":[

@@ -56,7 +56,7 @@ class BrerpWsc {
 
     public function make_request() {
         $request_url = $this->array_request['settings']['url'] . "/ADInterface/services/";
-        $request_url .= $this->array_request['settings']['url'] === "CompositeOperation" ? "compositeInterface" : "ModelADService";
+        $request_url .= $this->array_request['settings']['serviceType'] === "CompositeOperation" ? "compositeInterface" : "ModelADService";
         
         // if($this->array_request['settings']['serviceType'] === "CompositeOperation"){
         //     $request_url .= "compositeInterface";
@@ -74,6 +74,7 @@ class BrerpWsc {
         curl_setopt($ch, CURLOPT_POSTFIELDS,        utf8_encode($this->xml_request));
         $this->xml_response = curl_exec($ch);
         curl_close($ch);
+        echo "\n\n\n" . $this->xml_response;
         $this->parse_response();
     }
 

@@ -27,7 +27,7 @@ $brerp_wsc->build_request($json_request);
 echo "\n". $brerp_wsc->get_json_request();
 
 //Executando requisição e exibindo resposta
-$brerp_wsc->make_request();
+//$brerp_wsc->make_request();
 echo "\n\n" . $brerp_wsc->get_xml_response();
 
 
