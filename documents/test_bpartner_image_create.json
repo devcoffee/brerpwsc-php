@@ -2,7 +2,7 @@
     "settings":{
        "url":"https://teste.brerp.com.br",
        "user":"superuser @ brerp.com.br",
-       "password":"sua senha aqui",
+       "password":"sua_senha_aqui",
        "language":"pt_BR",
        "clientId":"1000000",
        "roleId":"1000000",
@@ -22,8 +22,23 @@
             "name":"bpartner_id",
             "values":{
                 "Name":"Parceiro de Negócios",
-                "Value":"123456"
+                "Value":"123456",
+                "Logo_ID":"@AD_Image.AD_Image_ID"
             }
-        }            
+        },
+        {
+            "type":"createData",
+            "preCommit":"false",
+            "postCommit":"false",
+            "serviceName":"CreateImageTest",
+            "table":"c_bpartner",
+            "action":"Create",
+            "name":"bpartner_id",
+            "values":{
+                "Name":"devCoffee-logo.png",
+                "Description":"Test create a BPartner with a Logo",
+                "BinaryData":"123456"
+            }
+        }
     ]
  }
