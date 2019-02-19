@@ -1,14 +1,15 @@
 {
     "settings":{
-       "url":"https://teste.brerp.com.br",
+       "url":"https://dev11.brerp.com.br",
        "user":"superuser @ brerp.com.br",
-       "password":"sua_senha_aqui",
+       "password":"pp_brerp",
        "language":"pt_BR",
        "clientId":"1000000",
        "roleId":"1000000",
        "orgId":"5000003",
        "warehouseId":"5000007",
        "stage":"9",
+       "ServiceType": "CompositeOperation",
        "compositeWebServiceName": "CompositeWebServiceTest"
     },
     "call":[
@@ -35,7 +36,7 @@
             "action":"Create",
             "name":"bpartner_id",
             "values":{
-                "Name":"Parceiro de Negócios",
+                "Name":"Chicão refatorado no modo turbo com imagens",
                 "Value":"123456",
                 "Logo_ID":"@AD_Image.AD_Image_ID"
             }
