@@ -9,6 +9,6 @@
        "orgId":"5000003",
        "warehouseId":"5000007",
        "stage":"9",
-       "compositeWebServiceName": "CompositeWebServiceTest"
-    }
- }
+       "serviceType": "createData"
+   }
+}

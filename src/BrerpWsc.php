@@ -72,9 +72,8 @@ class BrerpWsc {
         curl_setopt($ch, CURLOPT_POST,              true );
         curl_setopt($ch, CURLOPT_FRESH_CONNECT,     TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS,        utf8_encode($this->xml_request));
-        $this->xml_response = curl_exec($ch);
+        $this->xml_response = utf8_encode(curl_exec($ch));
         curl_close($ch);
-        echo "\n\n\n" . $this->xml_response;
         $this->parse_response();
     }
 
@@ -189,6 +188,9 @@ class BrerpWsc {
         return $new_array;
     }
 
+    private function validate_json_request(){
+        return false;
+    }
     public function validate_response() {
         return true;
     }
@@ -270,13 +272,20 @@ class BrerpWsc {
         } else {
             $this->xml_request .= '<_0:ModelCRUD>';
             $this->xml_request .= '<_0:serviceType>' . $this->array_request['call']['serviceName'] . '</_0:serviceType>';
-            $this->xml_request .=  '<_0:DataRow>';
-            foreach($this->array_request['call']['values'] as $key => $value) {
-                $this->xml_request .= '<_0:field column="' . $key . '">';
-                $this->xml_request .= '<_0:val>' . $value . '</_0:val>';
-                $this->xml_request .= '</_0:field>';
+            if($this->array_request['settings']['serviceType'] === "queryData"){
+                $this->xml_request .= '<_0:Limit>' . $this->array_request['call']['queryConfig']['limit'] . '</_0:Limit>';
+                $this->xml_request .= '<_0:Offset>' . $this->array_request['call']['queryConfig']['offset'] . '</_0:Offset>';
+
             }
-            $this->xml_request .= ' </_0:DataRow>';
+            if(isset($this->array_request['call']['values'])){
+                $this->xml_request .=  '<_0:DataRow>';
+                foreach($this->array_request['call']['values'] as $key => $value) {
+                    $this->xml_request .= '<_0:field column="' . $key . '">';
+                    $this->xml_request .= '<_0:val>' . $value . '</_0:val>';
+                    $this->xml_request .= '</_0:field>';
+                }
+                $this->xml_request .= ' </_0:DataRow>';
+            }
             $this->xml_request .= '</_0:ModelCRUD>';
             $this->xml_request .= '</_0:ModelCRUDRequest>';
             $this->xml_request .= '</_0:' . $this->array_request['settings']['serviceType'] . '>';

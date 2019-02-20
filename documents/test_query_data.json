@@ -9,17 +9,19 @@
        "orgId":"5000003",
        "warehouseId":"5000007",
        "stage":"9",
-       "compositeWebServiceName": "CompositeWebServiceTest"
+       "serviceType": "queryData"
     },
-    "call":[
+    "call":
         {
-            "type":"runProcess",
             "preCommit":"false",
             "postCommit":"false",
             "serviceName":"QueryBPartnerTest",
             "table":"c_bpartner",
             "action":"queryData",
-            "name":"bpartner_id"
+            "name":"bpartner_id",
+            "queryConfig":{
+                "limit": 2,
+                "offset": 0
+            }
         }
-    ]
  }
