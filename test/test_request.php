@@ -9,6 +9,16 @@ $json_request = json_decode($request_content, true);
 //Instanciando objeto BrerpWSC
 $brerp_wsc = new BrerpWsc();
 
+//Validando o formato JSON
+$jsonValidate = $brerp_wsc->validate_JSON_request($json_request);
+
+if($jsonValidate[0]){
+    echo $jsonValidate[1];
+} else {
+    echo $jsonValidate[1];
+    exit;
+}
+
 //Criando xml de envio
 $brerp_wsc->build_request($json_request);
 

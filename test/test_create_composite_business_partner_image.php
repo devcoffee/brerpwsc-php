@@ -8,6 +8,20 @@ require "../src/BinaryData.class.php";
 $request_content = file_get_contents("../documents/test_bpartner_image_create.json");
 $json_request = json_decode($request_content, true);
 
+//Instanciando o web service connector
+$brerp_wsc = new BrerpWsc();
+
+
+//Validando o formato JSON
+$jsonValidate = $brerp_wsc->validate_JSON_request($json_request);
+
+if($jsonValidate[0]){
+    echo $jsonValidate[1];
+} else {
+    echo $jsonValidate[1];
+    exit;
+}
+
 //Atribuindo valor aleatório para a chave de busca do parceiro
 $json_request["call"][1]["values"]["Value"] = random_int(1000000, 10000000);
 
@@ -19,8 +33,7 @@ $imgb64 = $binarydata->img2base64("../images/logoP.png");
 //Atribuindo o logo em base64 no BinaryData
 $json_request["call"][0]["values"]["BinaryData"] = $imgb64;
 
-//Instanciando o web service connector
-$brerp_wsc = new BrerpWsc();
+
 
 //Construindo requisição através do json
 $brerp_wsc->build_request($json_request);

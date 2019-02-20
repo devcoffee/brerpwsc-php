@@ -9,6 +9,7 @@ $brerp_wsc = new BrerpWsc();
 $request_content = file_get_contents("../documents/test_create_business_partner.json");
 $json_request = json_decode($request_content, true);
 
+//Validando o formato JSON
 $jsonValidate = $brerp_wsc->validate_JSON_request($json_request);
 
 if($jsonValidate[0]){
