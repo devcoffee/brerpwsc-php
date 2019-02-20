@@ -1,8 +1,8 @@
 {
     "settings":{
-       "url":"http://dev11.devcoffee.com.br",
+       "url":"http://teste.brerp.com.br",
        "user":"superuser @ brerp.com.br",
-       "password":"pp_brerp",
+       "password":"sua senha aqui",
        "language":"pt_BR",
        "clientId":"1000000",
        "roleId":"1000000",
