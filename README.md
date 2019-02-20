@@ -26,9 +26,11 @@ O repositório está dividido em 3 diretórios:
 
 ## Instalação
 
-Para utilizar o **brerpwsc-php** basta copiar a classe dentro de seu projeto e a importar nas classes PHP responsáveis por se comunicar com o **BrERP**.
+Para utilizar o **brerpwsc-php** basta instala-lo em seu projeto **php** utilizando o composer:
 
-Logo a biblioteca estará disponível via *composer*.
+```shell
+composer require devcoffee/brerp-php-composite-wsc
+```
 
 ## Exemplo prático: Criando um Parceiro de Negócios com Imagem de Logo
 
