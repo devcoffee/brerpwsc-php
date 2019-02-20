@@ -189,6 +189,13 @@ class BrerpWsc {
         return $new_array;
     }
 
+    public function validate_JSON_request($json){
+        if ($json === null){
+            return [false, "Error on JSON format \n"];
+        }
+        return [true, "JSON OK \n"];
+    }
+
     public function validate_response() {
         return true;
     }
