@@ -1,0 +1,25 @@
+{
+    "settings":{
+        "url":"https://teste.brerp.com.br",
+        "user":"superuser @ brerp.com.br",
+        "password":"sua_senha_aqui",
+        "language":"pt_BR",
+        "clientId":"1000000",
+        "roleId":"1000000",
+        "orgId":"5000003",
+        "warehouseId":"5000007",
+        "stage":"9",
+        "serviceType": "readData"
+    },
+    "call":
+        {
+            "serviceName":"ReadBPartnerTest",
+            "table":"c_bpartner",
+            "action":"Read",
+            "name":"bpartner_id",
+            "values":{
+                "Name":"Parceiro de Negócios",
+                "Value":"123456"
+            }
+        }
+ }

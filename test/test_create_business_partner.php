@@ -2,16 +2,28 @@
 
 require "../src/BrerpWsc.php";
 
+//Instanciando o web service connector
+$brerp_wsc = new BrerpWsc();
 
 //Lendo dados do arquivo json no diretorio documents
 $request_content = file_get_contents("../documents/test_create_business_partner.json");
 $json_request = json_decode($request_content, true);
 
+$jsonValidate = $brerp_wsc->validate_JSON_request($json_request);
+
+if($jsonValidate[0]){
+    echo $jsonValidate[1];
+} else {
+    echo $jsonValidate[1];
+    exit;
+}
+
 //Atribuindo valor aleatório para a chave de busca do parceiro
 $json_request["call"]["values"]["Value"] = random_int(1000000, 10000000);
 
-//Instanciando o web service connector
-$brerp_wsc = new BrerpWsc();
+
+
+
 
 //Construindo requisição através do json
 $brerp_wsc->build_request($json_request);
