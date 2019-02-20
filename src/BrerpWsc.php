@@ -22,7 +22,7 @@ Rua Paulo Rebessi 665 - Cidade Jardim - Leme/SP - Brasil.
 """
 <?php
 
-//namespace BrerpPhpCompositeWsc;
+namespace BrerpPhpCompositeWsc;
 
 class BrerpWsc {
 
