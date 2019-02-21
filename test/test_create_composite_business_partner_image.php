@@ -22,9 +22,14 @@ Rua Paulo Rebessi 665 - Cidade Jardim - Leme/SP - Brasil.
 """
 <?php
 
+//Composer
+use BrerpPhpCompositeWsc\BrerpWsc;
+use BrerpPhpCompositeWsc\BinaryData;
+
+/*
 require "../src/BrerpWsc.php";
 require "../src/BinaryData.class.php";
-
+*/
 
 //Lendo dados do arquivo json no diretorio documents
 $request_content = file_get_contents("../documents/test_bpartner_image_create.json");
