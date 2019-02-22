@@ -26,10 +26,11 @@ O repositório está dividido em 3 diretórios:
 
 ## Instalação
 
-Para utilizar o **brerpwsc-php** basta instala-lo em seu projeto **php** utilizando o composer:
+O **brerpwsc-php** está publicado como biblioteca no **Packagist**, e portanto, para utiliza-lo em seu projeto **php** basta instalá-lo utilizando o **composer**:
 
 ```shell
 composer require devcoffee/brerp-php-composite-wsc
+composer update
 ```
 
 ## Exemplo prático: Criando um Parceiro de Negócios com Imagem de Logo
@@ -166,8 +167,10 @@ Podemos então, utilizar o seguinte código **PHP** para consultar o *Web Servic
 ```php
 <?php
 
-require "../src/BrerpWsc.php";
-require "../src/BinaryData.class.php";
+require_once __DIR__ . '/vendor/autoload.php';
+
+use DevCoffee\BrerpPhpCompositeWsc\BrerpWsc;
+use DevCoffee\BrerpPhpCompositeWsc\BinaryData;
 
 
 //Lendo dados do arquivo json no diretorio documents
@@ -323,7 +326,9 @@ O código **PHP** mantém-se igual, apenas utilizando os objetos da classe **Bre
 ```php
 <?php
 
-require "../src/BrerpWsc.php";
+require_once __DIR__ . '/vendor/autoload.php';
+
+use DevCoffee\BrerpPhpCompositeWsc\BrerpWsc;
 
 $request_content = file_get_contents("../documents/test_query_data.json");
 $json_request = json_decode($request_content, true);
