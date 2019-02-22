@@ -1,7 +1,8 @@
 {
     "name": "devcoffee/brerp-php-composite-wsc",
-    "description": "Biblioteca em PHP para facilitar as requisições SOAP no BrERP ",
-    "license": "GPL-3.0",
+    "description": "Biblioteca em PHP para facilitar as requisições SOAP no BrERP.",
+    "keywords": ["template", "composer", "package"],
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Pedro Pozzi Ferreira",
@@ -12,13 +13,13 @@
             "email": "jonatas.silvestrini@devcoffee.com.br"
         }
     ],
-    "minimum-stability": "dev",
+    "type": "library",
     "require": {
-        "php": ">=5.3.0"
+                "php": ">=7.1"
     },
-    "autoload" : {
+    "autoload": {
         "psr-4": {
-            "BrerpPhpCompositeWsc\\": "src/"
+            "DevCoffee\\BrerpPhpCompositeWsc\\": "src/"
         }
     }
-}
+}       

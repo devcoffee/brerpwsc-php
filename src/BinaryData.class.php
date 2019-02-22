@@ -1,4 +1,4 @@
-<?php namespace BrerpPhpCompositeWsc;
+<?php namespace DevCoffee\BrerpPhpCompositeWsc;
 /*
 Produto: BrERP Web Service Client - PHP                                                   
 Copyright (C) 2018  devCoffee Sistemas de Gestão Integrada                 
