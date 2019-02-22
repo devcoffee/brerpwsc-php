@@ -1,4 +1,5 @@
-"""
+<?php
+/*
 Produto: BrERP Web Service Client - PHP                                                   
 Copyright (C) 2018  devCoffee Sistemas de Gestão Integrada                 
                                                                            
@@ -19,15 +20,15 @@ junto com este programa; se não, escreva para a Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                   
 02111-1307, USA  ou para devCoffee Sistemas de Gestão Integrada,           
 Rua Paulo Rebessi 665 - Cidade Jardim - Leme/SP - Brasil.                           
-"""
-<?php
+*/
 
 //Composer
-use BrerpPhpCompositeWsc\BrerpWsc;
+require_once __DIR__ . '/vendor/autoload.php';
 
-/*
-require "../src/BrerpWsc.php";
-*/
+use DevCoffee\BrerpPhpCompositeWsc\BrerpWsc;
+
+
+//require "../src/BrerpWsc.php";
 
 //Carregando parametros xml do arquivo teste no diretorio documentos
 $xml_content = file_get_contents("../documents/test_request.xml");
