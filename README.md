@@ -11,7 +11,7 @@ O BrERP Web Service Connector tem como objetivo facilitar as requisições SOAP 
 
 ## Compatibilidade
 
-Este repositório conta com uma solução **PHP**, **compatível com PHP > 5.0**
+Este repositório conta com uma solução **PHP**, **compatível com PHP > 5.3**
 
 ## Arquitetura
 
