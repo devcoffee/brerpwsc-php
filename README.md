@@ -354,7 +354,7 @@ echo "\n\n" . $brerp_wsc->get_xml_request();
 $brerp_wsc->make_request();
 
 //Exibindo resposta do servidor
-echo "\n\n\n" . $brerp_wsc->get_raw_json_response(); 
+echo "\n\n\n" . $brerp_wsc->get_raw_json_response();
 ```
 
 ### Resposta do Servidor
