@@ -263,17 +263,17 @@ class BrerpWsc {
     private function build_single_service_request_body(){
         if($this->array_request['settings']['serviceType'] === "setDocAction"){
             $this->xml_request .= '<_0:ModelSetDocAction>';
-            $this->xml_request .= '<_0:serviceType>' . $array_request['call']['serviceName'] . '</_0:serviceType>';
-            $this->xml_request .= '<_0:tableName>' . $array_request['call']['table'] . '</_0:tableName>';
+            $this->xml_request .= '<_0:serviceType>' . $this->array_request['call']['serviceName'] . '</_0:serviceType>';
+            $this->xml_request .= '<_0:tableName>' . $this->array_request['call']['table'] . '</_0:tableName>';
             $this->xml_request .= '<_0:recordID>' . '0' . '</_0:recordID>';
-            $this->xml_request .= '<_0:recordIDVariable>@' . $array_request['call']['table'] . "." . $array_request['call']['idColumn'] . '</_0:recordIDVariable>';
-            $this->xml_request .= '<_0:docAction>' . $array_request['call']['action'] . '</_0:docAction>';
+            $this->xml_request .= '<_0:recordIDVariable>@' . $this->array_request['call']['table'] . "." . $this->array_request['call']['idColumn'] . '</_0:recordIDVariable>';
+            $this->xml_request .= '<_0:docAction>' . $this->array_request['call']['action'] . '</_0:docAction>';
             $this->xml_request .= '</_0:ModelSetDocAction>';
         } else if($this->array_request['settings']['serviceType'] === "runProcess"){
             $this->xml_request .= '<_0:ModelRunProcess>';
-            $this->xml_request .= '<_0:serviceType>' . $request['serviceName'] . '</_0:serviceType>';
+            $this->xml_request .= '<_0:serviceType>' . $this->array_request['serviceName'] . '</_0:serviceType>';
             $this->xml_request .= '<_0:ParamValues>';
-            foreach($request['values'] as $key => $value) {
+            foreach($this->array_request['values'] as $key => $value) {
                 if($key == 'lookup') {
                     foreach($value as $lookup_req) {
                         $this->xml_request .= '<_0:field column="' . $lookup_req['id'] . '" lval="' . $lookup_req['value'] . '"/>';
